@@ -1,0 +1,25 @@
+name: Mi Composite Action
+description: Una acción que combina varios pasos
+inputs:
+  mensaje:
+    description: Un mensaje para imprimir
+    required: true
+    default: "Hola desde una composite action"
+
+outputs:
+  resultado:
+    description: Resultado del proceso
+    value: ${{ steps.resultado.outputs.resultado }}
+runs:
+  using: "composite"
+  steps:
+    - name: Imprimir mensaje
+      shell: bash
+      run: echo "${{ inputs.mensaje }}"
+    - name: Crear archivo temporal
+      shell: bash
+      run: echo "Archivo creado" > archivo.txt
+    - name: Retornar resultado
+      id: resultado
+      shell: bash
+      run: echo "resultado=éxito" >> $GITHUB_ENV
